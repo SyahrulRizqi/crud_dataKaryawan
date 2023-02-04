@@ -77,7 +77,7 @@ int main(){
 			}
 		}
 		
-	cout << "Akhir program" << endl;
+	cout << "\n-- Program selesai -- \n" << endl;
 }
 
 
@@ -102,7 +102,7 @@ void tampilKaryawan(fstream &data){
 	cout << "No\t|\tNama\t|\tNPK\t|\tBagian" << endl;
 	for(int i = 1; i <= size; i++){
 		lihatKaryawan = readData(data, i);
-		cout << 1 << "\t|\t";
+		cout << i << "\t|\t";
 		cout << lihatKaryawan.nama << "\t|\t";
 		cout << lihatKaryawan.npk << "\t|\t";
 		cout << lihatKaryawan.bagian << endl;
@@ -121,14 +121,14 @@ void hapusKaryawan(fstream &data){
 	writeData(data,no,blankKaryawan);
 
 
-	offset = 0;
 	dataSementara.open("temp.dat", ios::trunc | ios::out | ios::in | ios::binary);
 
+	offset = 0;
 	for (int i = 1; i <= size; i++){
 		tempKaryawan = readData(data,i);
 
 		if (!tempKaryawan.nama.empty()){
-			writeData(dataSementara,i,tempKaryawan);
+			writeData(dataSementara,i - offset ,tempKaryawan);
 		}
 		else {
 			offset++;
@@ -136,7 +136,7 @@ void hapusKaryawan(fstream &data){
 		}
 	}
 
-	size = getData(data);
+	size = getData(dataSementara);
 	data.close();
 	data.open("data.bin", ios::trunc | ios::out | ios::binary);
 	data.close();
@@ -153,8 +153,7 @@ void hapusKaryawan(fstream &data){
 void updateKaryawan(fstream &data){
 	int no;
 	Karyawan updateInput;
-
-	ubah:
+	
 	cout << "Pilih nomor > ";
 	cin >> no;
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
