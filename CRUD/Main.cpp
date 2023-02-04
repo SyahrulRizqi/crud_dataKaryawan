@@ -77,7 +77,7 @@ int main(){
 			}
 		}
 		
-	cout << "Akhir program" << endl;
+	cout << "\n-- Program Selesai --\n" << endl;
 }
 
 void cekDatabase(fstream &data){
